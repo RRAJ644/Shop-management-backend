@@ -1,0 +1,514 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Van Connect Backend APIs",
+    "description": "",
+    "version": "1.0"
+  },
+  "schemes": ["http", "https"],
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Authentication related routes"
+    },
+    {
+      "name": "super-admin",
+      "description": "Super admin related routes"
+    },
+    {
+      "name": "store-admin",
+      "description": "Store admin related routes"
+    },
+    {
+      "name": "store-manager",
+      "description": "Store manager related routes"
+    }
+  ],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "tags": ["auth"],
+        "description": "Login a user - Super admin, Store admin, Store manager",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": {
+                    "userName": "username",
+                    "password": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTMzODY5MzAsImlhdCI6MTY1MzM3OTczMC41MTgsImVtYWlsIjoidGVzdCIsInBhc3N3b3JkIjoiJDJiJDEwJFNJZGIubU1VbWUzRHRocTVLWG9TYy5MN3dRU0hpaG52Lm1OZk1DVmtLR2hWbnB5WFhIWWd1In0.GPcB2VFHRhA3ytXfT0seBjNC9aetP_k24QktNVm6vOI"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Invalid credentials"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/create-store-admin": {
+      "post": {
+        "tags": ["super-admin"],
+        "description": "Create store admin - only super admin can create a store admin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fistName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "jobTitle": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": {
+                    "firstName": "Store",
+                    "lastName": "Admin",
+                    "email": "storeAdmin@yopmail.com",
+                    "password": "qwerty123",
+                    "phoneNumber": 9773768954,
+                    "jobTitle": "store-admin",
+                    "address": "Surat, Gujrat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+					{
+						"JWT": []
+					}
+				],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "firstName": "Store",
+                  "lastName": "Admin",
+                  "email": "storeAdmin@yopmail.com",
+                  "userName": "1681964727638",
+                  "password": "$2a$10$m4QjHvPYnGvgYU.arGfYUORdCfeexsiCug8QVyDgfTQ4z0MjcIYCS",
+                  "phoneNumber": 9773768954,
+                  "jobTitle": "store-admin",
+                  "address": "Surat, Gujrat",
+                  "role": "StoreAdmin",
+                  "_id": "6440bf094db31125c4825346",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/create-store": {
+      "post": {
+        "tags": ["store-admin"],
+        "description": "Create store - only store admin can create store",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeName": {
+                    "type": "string"
+                  },
+                  "storeType": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "operatingHours": {
+                    "type": "string"
+                  },
+                  "TAN": {
+                    "type": "string"
+                  },
+                  "currency": {
+                    "type": "string"
+                  },
+                  "paymentMethods": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": {
+                    "storeName": "store1",
+                    "storeType": "Retail",
+                    "address": "Surat, gujarat",
+                    "email": "store@gmail.com",
+                    "phoneNumber": 1234567890,
+                    "operatingHours": "12",
+                    "TAN": "AAZSD12",
+                    "currency": "rupees",
+                    "paymentMethods": "Cash"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "store": {
+                    "storeAdminId": "6440bf094db31125c4825346",
+                    "storeName": "store1",
+                    "storeCode": "20/4/2023, 9:57:48 am",
+                    "storeType": "Retail",
+                    "email": "store@gmail.com",
+                    "phoneNumber": 1234567890,
+                    "operatingHours": "12",
+                    "address": "Surat, gujrat",
+                    "TAN": "AAZSD12",
+                    "currency": "rupees",
+                    "paymentMethods": "Cash",
+                    "_id": "6440bf444db31125c482534b",
+                    "__v": 0
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/create-store-manager": {
+      "post": {
+        "tags": ["store-admin"],
+        "description": "Create Store manager - only store admin can create store manager",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fistName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "jobTitle": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": {
+                    "firstName": "Store",
+                    "lastName": "Manager",
+                    "email": "storeManager34@yopmail.com",
+                    "password": "qwerty123",
+                    "phoneNumber": 9773768954,
+                    "jobTitle": "managing store - 2",
+                    "address": "Surat, Gujrat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "store-manager": {
+                    "firstName": "Store",
+                    "lastName": "Manager",
+                    "email": "storeManager34@yopmail.com",
+                    "userName": "1681964950624",
+                    "password": "$2a$10$6cFTmiwsLO9OxuYgp1hEuOFeEgKwAzX9ueJhiRZSyk1zI8pdF/1tG",
+                    "phoneNumber": 9773768954,
+                    "jobTitle": "managing store - 2",
+                    "address": "Surat, Gujrat",
+                    "role": "StoreManager",
+                    "storeId": "6440bf444db31125c482534b",
+                    "_id": "6440bfad79f24fc435ac0bad",
+                    "__v": 0
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/create-store-sales-rep": {
+      "post": {
+        "tags": ["store-manager"],
+        "description": "Create Store manager - only store admin can create store manager",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fistName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "jobTitle": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "region": {
+                    "type": "string"
+                  },
+                  "quota": {
+                    "type": "string"
+                  },
+                  "hireDate": {
+                    "type": "string"
+                  },
+                  "employmentStatus": {
+                    "type": "string"
+                  },
+                  "commissionStructure": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": {
+                    "firstName": "karan",
+                    "lastName": "kumar",
+                    "email": "salesRep@yopmail.com",
+                    "password": "karan123",
+                    "phoneNumber": "1234567890",
+                    "jobTitle": "salesPerson",
+                    "address": "Surat, Gujarat",
+                    "region": "Gujarat",
+                    "quota": 100,
+                    "hireDate": "2023-04-19",
+                    "employmentStatus": "full-time",
+                    "commissionStructure": "10%"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "store-manager": {
+                    "firstName": "karan",
+                    "lastName": "kumar",
+                    "email": "salesRep@yopmail.com",
+                    "userName": "1681966169929",
+                    "password": "$2a$10$jJg30chPemds70G95QXx7.5YbLzJODGZZq3Snm8/8cYE4JPrmYVRC",
+                    "phoneNumber": 1234567890,
+                    "jobTitle": "salesPerson",
+                    "address": "Surat, Gujarat",
+                    "role": "SalesRep",
+                    "storeId": "6440bf444db31125c482534b",
+                    "_id": "6440c485d12299902d1d7bc7",
+                    "__v": 0
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "type": "http",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
